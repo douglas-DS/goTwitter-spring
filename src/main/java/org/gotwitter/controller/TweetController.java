@@ -1,6 +1,6 @@
-package org.gotwitter.controllers;
+package org.gotwitter.controller;
 
-import org.gotwitter.models.Tweet;
+import org.gotwitter.model.Tweet;
 import org.gotwitter.repository.TweetRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

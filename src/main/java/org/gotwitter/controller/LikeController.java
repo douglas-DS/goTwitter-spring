@@ -1,28 +1,30 @@
-package org.gotwitter.controllers;
+package org.gotwitter.controller;
 
-import org.gotwitter.models.Tweet;
-import org.gotwitter.repository.TweetRepo;
+import org.gotwitter.model.Tweet;
+import org.gotwitter.service.TweetService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("likes")
 public class LikeController {
 
-    private TweetRepo repository;
+    private TweetService tweetService;
 
     @Autowired
-    public LikeController(TweetRepo repository) {
-        this.repository = repository;
+    public LikeController(TweetService tweetService) {
+        this.tweetService = tweetService;
     }
 
     @PostMapping("{id}")
-    @ResponseBody
     public Tweet store(@PathVariable String id) {
-        Tweet tweet = repository.findTweetById(id);
+        Tweet tweet = tweetService.findTweetById(id);
 
         tweet.setLikes(tweet.getLikes() + 1);
-        repository.save(tweet);
+        tweetService.save(tweet);
 
         return tweet;
     }
