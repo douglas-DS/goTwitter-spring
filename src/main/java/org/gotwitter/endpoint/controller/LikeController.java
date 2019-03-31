@@ -1,4 +1,4 @@
-package org.gotwitter.controller;
+package org.gotwitter.endpoint;
 
 import org.gotwitter.model.Tweet;
 import org.gotwitter.service.TweetService;
@@ -25,7 +25,6 @@ public class LikeController {
 
         tweet.setLikes(tweet.getLikes() + 1);
         tweetService.save(tweet);
-
         return tweet;
     }
 }

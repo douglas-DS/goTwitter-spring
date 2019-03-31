@@ -1,4 +1,4 @@
-package org.gotwitter.service;
+package org.gotwitter.endpoint.controller.service;
 
 import org.gotwitter.model.Tweet;
 import org.gotwitter.repository.TweetRepo;
