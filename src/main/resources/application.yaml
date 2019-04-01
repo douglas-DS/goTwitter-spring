@@ -1,0 +1,7 @@
+spring:
+  data:
+    mongodb:
+      host: ds133275.mlab.com:33275
+      database: backend-gotwitter
+      username: spring
+      password: spring123
