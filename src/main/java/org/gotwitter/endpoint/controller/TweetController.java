@@ -29,9 +29,8 @@ public class TweetController {
         return tweetService.findTweet(id);
     }
 
-    @PostMapping("like/{id}")
+    @PutMapping("like/{id}")
     public ResponseEntity<?> store(@PathVariable String id) {
         return tweetService.storeTweetLike(id);
     }
-
 }
