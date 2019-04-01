@@ -6,7 +6,6 @@ import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Document(collection = "tweets")
@@ -21,11 +20,11 @@ public class Tweet {
     private String author;
     private String content;
     private Integer likes;
-    private String createdAt;
+    private Date createdAt;
 
     public Tweet() {
         this.likes = 0;
-        this.createdAt = new Date().toString();
+        this.createdAt = new Date();
     }
 }
 
