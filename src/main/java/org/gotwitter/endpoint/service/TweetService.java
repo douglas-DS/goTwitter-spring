@@ -22,19 +22,23 @@ public class TweetService {
 
     public ResponseEntity<List<Tweet>> listAllToIndex() {
         List<Tweet> allTweets = tweetRepository.findAll(new Sort(Sort.Direction.DESC, "createdAt"));
+        log.info("Listing all tweets by creation date");
         return ResponseEntity.ok(allTweets);
     }
 
     public ResponseEntity<Tweet> findTweet(String id) {
         if (tweetRepository.existsById(id)) {
             Tweet tweet = tweetRepository.findTweetById(id);
+            log.info("Searching tweet by id: " + id);
             return ResponseEntity.ok(tweet);
         }
+        log.error("Tweet not found by id: " + id);
         return ResponseEntity.notFound().build();
     }
 
     public ResponseEntity<Tweet> save(Tweet tweet) {
         Tweet savedTweet = tweetRepository.save(tweet);
+        log.info("Tweet successfully saved");
         return ResponseEntity.ok(savedTweet);
     }
 
@@ -43,8 +47,10 @@ public class TweetService {
             Tweet tweet = tweetRepository.findTweetById(id);
             tweet.setLikes(tweet.getLikes() + 1);
             tweetRepository.save(tweet);
+            log.info("Like add to tweet with id: " + id);
             return ResponseEntity.ok(tweet);
         }
+        log.error("Tweet not found by id: " + id);
         return ResponseEntity.notFound().build();
     }
 
