@@ -1,6 +1,6 @@
 package org.gotwitter.endpoint.controller;
 
-import org.gotwitter.service.TweetService;
+import org.gotwitter.endpoint.service.TweetService;
 import org.gotwitter.model.Tweet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
