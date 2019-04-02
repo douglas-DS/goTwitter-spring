@@ -5,3 +5,6 @@ spring:
       database: backend-gotwitter
       username: spring
       password: spring123
+
+server:
+  port: 8080
