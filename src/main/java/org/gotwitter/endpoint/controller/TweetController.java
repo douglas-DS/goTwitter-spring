@@ -5,6 +5,7 @@ import org.gotwitter.endpoint.service.TweetService;
 import org.gotwitter.model.Tweet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
@@ -23,9 +24,9 @@ public class TweetController {
     }
 
     @PostMapping
-    @MessageMapping("/tweet")
+    @MessageMapping("/handler")
     @SendTo("/topic/tweet")
-    public ResponseEntity<?> store(@RequestBody Tweet tweet) {
+    public ResponseEntity<?> storeTweet(@RequestBody Tweet tweet) {
         return tweetService.save(tweet);
     }
 
@@ -35,9 +36,9 @@ public class TweetController {
     }
 
     @PutMapping("like/{id}")
-    @MessageMapping("/like/{id}")
+    @MessageMapping("/handler/{id}")
     @SendTo("/topic/like")
-    public ResponseEntity<?> store(@PathVariable String id) {
+    public ResponseEntity<?> storeLike(@DestinationVariable("id") @PathVariable String id) {
         return tweetService.storeTweetLike(id);
     }
 }

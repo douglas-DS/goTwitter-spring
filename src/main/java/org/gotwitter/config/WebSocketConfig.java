@@ -1,5 +1,6 @@
 package org.gotwitter.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,12 +14,14 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @Configuration
 @EnableWebSocketMessageBroker
 @CrossOrigin
+@Slf4j
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
         config.enableSimpleBroker("/topic");
         config.setApplicationDestinationPrefixes("/app");
+        log.info("Simple broker: /topic. App destination: /app");
     }
 
     @Override
@@ -26,7 +29,8 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         registry.addEndpoint("/handler")
                 .setAllowedOrigins("*")
                 .withSockJS()
-                .setSupressCors(true);
+                .setSupressCors(false);
+        log.info("Client registered to endpoint");
     }
 
 }
