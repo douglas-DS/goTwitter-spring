@@ -30,7 +30,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
                 .setAllowedOrigins("*")
                 .withSockJS()
                 .setSupressCors(false);
-        log.info("Client registered to endpoint");
+        log.info("Client registered to endpoint...");
     }
 
 }
