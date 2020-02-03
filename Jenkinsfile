@@ -7,7 +7,7 @@ node {
     imageName = "${companyName}/gotwitter-spring:${tag}"
 
     stage("Build")
-        sh "mvn clean package"
+        sh "./mvnw clean package"
         def customImage = docker.build("${imageName}")
 
     stage("Push")
