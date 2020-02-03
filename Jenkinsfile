@@ -3,8 +3,8 @@ node {
     sh "git rev-parse --short HEAD > commit-id"
     tag = readFile('commit-id').replace("\n", "").replace("\r", "")
     companyName="douglasso"
-    appName = "goTwitter-spring"
-    imageName = "${companyName}/gotwitter-spring:${tag}"
+    appName = "gotwitter-spring"
+    imageName = "${companyName}/${appName}:${tag}"
 
     stage("Build")
         sh "./mvnw clean package"
