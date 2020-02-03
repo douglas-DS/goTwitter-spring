@@ -4,7 +4,7 @@ node {
     tag = readFile('commit-id').replace("\n", "").replace("\r", "")
     companyName="douglasso"
     appName = "goTwitter-spring"
-    imageName = "${companyName}/${appName}:${tag}"
+    imageName = "${companyName}/gotwitter-spring:${tag}"
 
     stage("Build")
         sh "./mvnw clean package"
