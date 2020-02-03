@@ -1,4 +1,4 @@
-FROM openjdk:11-jdk-slim
+FROM openjdk:8-jdk-alpine
 
 ARG APP_NAME=goTwitter-spring
 
