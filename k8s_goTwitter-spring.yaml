@@ -1,34 +1,34 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: goTwitter-spring
+  name: gotwitter-spring
   labels:
-    app: goTwitter-spring
+    app: gotwitter-spring
 spec:
   ports:
     - port: 3000
       targetPort: 3000
 #      nodePort: 32001
   selector:
-    app: goTwitter-spring
+    app: gotwitter-spring
   type: NodePort
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: goTwitter-spring
+  name: gotwitter-spring
 spec:
   selector:
     matchLabels:
-      app: goTwitter-spring
+      app: gotwitter-spring
   replicas: 2
   template:
     metadata:
       labels:
-        app: goTwitter-spring
+        app: gotwitter-spring
     spec:
       containers:
-        - name: goTwitter-spring
+        - name: gotwitter-spring
           image: "douglasso/gotwitter-spring"
           imagePullPolicy: Always
           ports:
