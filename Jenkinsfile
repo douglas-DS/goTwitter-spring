@@ -13,7 +13,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh "mvn -B -DskipTests clean package"
+                sh "./mvnw -B -DskipTests clean package"
                 script {
                     tag = readFile('commit-id').replace("\n", "").replace("\r", "")
                     imageName = '${COMPANY_NAME}/${APP_NAME}:${tag}'
