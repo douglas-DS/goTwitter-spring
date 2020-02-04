@@ -32,5 +32,4 @@ spec:
           image: "douglasso/gotwitter-spring"
           imagePullPolicy: Always
           ports:
-            - name: http
-              containerPort: 3000
+          - containerPort: 3000
