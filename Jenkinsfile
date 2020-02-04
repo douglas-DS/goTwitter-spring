@@ -1,6 +1,9 @@
 @Library('jenkins-shared-library')_
 pipeline {
     agent any
+    tools {
+        maven 'maven-3'
+    }
     environment {
         COMPANY_NAME = 'douglasso'
         APP_NAME = 'gotwitter-spring'
@@ -14,7 +17,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh "./mvnw -B -DskipTests clean package"
+                sh "mvn -B -DskipTests clean package"
                 script {
                     tag = readFile('commit-id').replace("\n", "").replace("\r", "")
                     imageName = '${COMPANY_NAME}/${APP_NAME}:${tag}'
