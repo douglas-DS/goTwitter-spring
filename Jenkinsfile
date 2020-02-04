@@ -1,24 +1,48 @@
-node {
-    checkout scm
-    sh "git rev-parse --short HEAD > commit-id"
-    tag = readFile('commit-id').replace("\n", "").replace("\r", "")
-    companyName="douglasso"
-    appName = "gotwitter-spring"
-    imageName = "${companyName}/${appName}:${tag}"
-
-    //Phase when jar and project image is build
-    stage('Build')
-        sh "./mvnw clean package"
-        def customImage = docker.build("${imageName}")
-
-    //The image is pushed to docker repo
-    stage('Push')
-        customImage.push()
-
-    //Deploy to k8s cluster and old images are removed of deployments
-    stage('Deploy PROD')
-        customImage.push('latest')
-        sh "kubectl apply -f k8s_${appName}.yaml"
-        sh "kubectl set image deployments/${appName} ${appName}=${imageName}"
-        sh "kubectl rollout status deployments/${appName}"
+pipeline {
+    agent any
+    environment {
+        COMPANY_NAME = 'douglasso'
+        APP_NAME = 'gotwitter-spring'
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+                sh "git rev-parse --short HEAD > commit-id"
+            }
+        }
+        stage('Build') {
+            steps {
+                sh "mvn -B -DskipTests clean package"
+                script {
+                    tag = readFile('commit-id').replace("\n", "").replace("\r", "")
+                    imageName = '${COMPANY_NAME}/${APP_NAME}:${tag}'
+                    echo '${imageName}'
+                    customImage = docker.build("${imageName}")
+                }
+            }
+        }
+        stage('Push image') {
+            steps {
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-ds') {
+                        custom.push()
+                        customImage.push('latest')
+                    }
+                }
+            }
+        }
+        stage('Deploy to K8S') {
+            steps {
+                sh "kubectl apply -f k8s_${APP_NAME}.yaml"
+                sh "kubectl set image deployments/${APP_NAME} ${APP_NAME}=${imageName}"
+                sh "kubectl rollout status deployments/${APP_NAME}"
+            }
+        }
+    }
+    post {
+        always {
+            slackNotifier(currentBuild.currentResult, 'Delivery')
+        }
+    }
 }
