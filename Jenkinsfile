@@ -41,9 +41,9 @@ pipeline {
             }
         }
     }
-    post {
-        always {
-            slackNotifier.call(currentBuild.currentResult, 'Delivery')
-        }
-    }
+    //post {
+        //always {
+            //slackNotifier(currentBuild.currentResult, 'Delivery')
+        //}
+    //}
 }
