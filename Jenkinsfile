@@ -43,7 +43,7 @@ pipeline {
     }
     post {
         always {
-            slackNotifier.groovy(currentBuild.currentResult, 'Delivery')
+            slackNotifier.call(currentBuild.currentResult, 'Delivery')
         }
     }
 }
