@@ -1,7 +1,6 @@
 @Library('jenkins-shared-library')_
 pipeline {
     agent any
-    notifyBuild('STARTED')
     tools {
         maven 'maven-3'
     }
@@ -12,6 +11,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
+                notifyBuild('STARTED')
                 checkout scm
                 sh "git rev-parse --short HEAD > commit-id"
             }
