@@ -7,7 +7,7 @@ pipeline {
     environment {
         COMPANY_NAME = 'douglasso'
         APP_NAME = 'gotwitter-spring'
-        LIB = @Library('jenkins-shared-library') _
+        LIB = '@Library('jenkins-shared-library') _'
     }
     stages {
         stage('Checkout') {
