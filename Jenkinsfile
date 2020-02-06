@@ -19,8 +19,8 @@ pipeline {
             steps {
                 sh "mvn -B -DskipTests clean package"
                 script {
-                    tag = readFile('commit-id').replace("\n", "").replace("\r", "")
-                    imageName = '${COMPANY_NAME}/${APP_NAME}:${tag}'
+                    def tag = readFile('commit-id').replace("\n", "").replace("\r", "")
+                    def imageName = '${COMPANY_NAME}/${APP_NAME}:${tag}'
                     echo '${imageName}'
                     def customImage = docker.build("${imageName}")
                 }
