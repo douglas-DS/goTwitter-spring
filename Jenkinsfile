@@ -66,9 +66,6 @@ def notifyBuild(String buildStatus = 'STARTED') {
     // build status of null means successful
     buildStatus =  buildStatus ?: 'SUCCESS'
 
-    // Default values
-//     def colorName = 'RED'
-//     def colorCode = '#FF0000'
     def subject = "${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'"
     def summary = "${subject} (${env.BUILD_URL})"
     def details = """<p>STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
@@ -87,11 +84,6 @@ def notifyBuild(String buildStatus = 'STARTED') {
             color = 'RED'
             colorCode = '#FF0000'
             break;
-//         default:
-//             color = 'RED'
-//             colorCode = '#FF0000'
-//             break;
     }
-    // Send notifications
     slackSend (color: colorCode, message: summary)
 }
