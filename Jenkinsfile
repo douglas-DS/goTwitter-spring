@@ -61,7 +61,9 @@ pipeline {
             }
         }
         always {
-            lib.notifyBuild(currentBuild.result)
+            script {
+                lib.notifyBuild(currentBuild.result)
+            }
         }
     }
 }
