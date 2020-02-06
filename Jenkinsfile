@@ -81,7 +81,7 @@ def notifyBuild(String buildStatus = 'STARTED') {
         default:
             color = 'RED'
             colorCode = '#FF0000'
-            break:
+            break;
     }
     // Send notifications
     slackSend (color: colorCode, message: summary)
