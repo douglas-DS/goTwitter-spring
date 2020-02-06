@@ -11,9 +11,6 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                script {
-                    //notifyBuild('STARTED') 
-                }
                 checkout scm
                 sh "git rev-parse --short HEAD > commit-id"
             }
