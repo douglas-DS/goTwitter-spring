@@ -1,4 +1,4 @@
-@Library('jenkins-shared-library') _
+//@Library('jenkins-shared-library') _
 pipeline {
     agent any
     tools {
@@ -12,7 +12,6 @@ pipeline {
         stage('Checkout') {
             steps {
                 script {
-                    library identifier: 'jenkins-shared-library@master', retriever: modernSCM([$class: 'GitSCMSource', remote: 'https://github.com/douglas-DS/shared-library.git'])
                     notifyBuild('STARTED') 
                 }
                 checkout scm
