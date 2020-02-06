@@ -7,13 +7,12 @@ pipeline {
     environment {
         COMPANY_NAME = 'douglasso'
         APP_NAME = 'gotwitter-spring'
-        LIB = '@Library('jenkins-shared-library') _'
     }
     stages {
         stage('Checkout') {
             steps {
                 script {
-                    LIB.notifyBuild('STARTED') 
+                    //notifyBuild('STARTED') 
                 }
                 checkout scm
                 sh "git rev-parse --short HEAD > commit-id"
@@ -46,24 +45,6 @@ pipeline {
                 sh "kubectl apply -f k8s_${APP_NAME}.yaml"
                 sh "kubectl set image deployments/${APP_NAME} ${APP_NAME}=${imageName}"
                 sh "kubectl rollout status deployments/${APP_NAME}"
-            }
-        }
-    }
-    post {
-        success {
-            script {
-                LIB.notifyBuild(currentBuild.result)
-            }
-        }
-        failure {
-            script {
-                currentBuild.result = 'FAILURE'
-                LIB.notifyBuild(currentBuild.result)
-            }
-        }
-        always {
-            script {
-                LIB.notifyBuild(currentBuild.result)
             }
         }
     }
