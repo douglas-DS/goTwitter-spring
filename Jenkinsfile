@@ -50,11 +50,15 @@ pipeline {
     }
     post {
         success {
-            notifyBuild(currentBuild.result)
+            script {
+                notifyBuild(currentBuild.result)
+            }
         }
         failure {
-            currentBuild.result = 'FAILURE'
-            notifyBuild(currentBuild.result)
+            script {
+                currentBuild.result = 'FAILURE'
+                notifyBuild(currentBuild.result)
+            }
         }
         always {
             notifyBuild(currentBuild.result)
