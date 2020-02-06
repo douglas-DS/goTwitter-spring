@@ -7,12 +7,13 @@ pipeline {
     environment {
         COMPANY_NAME = 'douglasso'
         APP_NAME = 'gotwitter-spring'
+        LIB = @Library('jenkins-shared-library') _
     }
     stages {
         stage('Checkout') {
             steps {
                 script {
-                    notifyBuild('STARTED') 
+                    LIB.notifyBuild('STARTED') 
                 }
                 checkout scm
                 sh "git rev-parse --short HEAD > commit-id"
@@ -51,18 +52,18 @@ pipeline {
     post {
         success {
             script {
-                notifyBuild(currentBuild.result)
+                LIB.notifyBuild(currentBuild.result)
             }
         }
         failure {
             script {
                 currentBuild.result = 'FAILURE'
-                notifyBuild(currentBuild.result)
+                LIB.notifyBuild(currentBuild.result)
             }
         }
         always {
             script {
-                notifyBuild(currentBuild.result)
+                LIB.notifyBuild(currentBuild.result)
             }
         }
     }
