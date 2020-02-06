@@ -17,15 +17,15 @@ pipeline {
         }
         stage('Build package and image') {
             environment {
-                TAG = readFile('commit-id').trim()
+                tag = readFile('commit-id').trim()
+                imageName = ""
                 customImage = null
             }
             steps {
                 sh "mvn -B -DskipTests clean package"
                 script {
-                    //def tag = readFile('commit-id').replace("\n", "").replace("\r", "")
-                    //imageName = '${COMPANY_NAME}/${APP_NAME}:${TAG}'
-                    customImage = docker.build("${COMPANY_NAME}/${APP_NAME}:${TAG}")
+                    imageName = "${COMPANY_NAME}/${APP_NAME}:${tag}"
+                    customImage = docker.build("${imageName}")
                 }
             }
         }
@@ -34,8 +34,6 @@ pipeline {
                 script {
                     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub-ds', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
                         sh 'docker login -u "$USERNAME" -p "$PASSWORD"'
-                        //docker.push('${imageName}')
-                        //docker.push('latest')
                         customImage.push()
                         customImage.push('latest')
                     }
