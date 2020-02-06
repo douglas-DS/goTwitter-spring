@@ -9,4 +9,4 @@ WORKDIR /usr/${APP_NAME}
 
 EXPOSE 3000
 
-CMD ["java", "-jar" ,"app.jar"]
+CMD ["java", "-Xms256m -Xmx512m -jar" ,"app.jar"]
