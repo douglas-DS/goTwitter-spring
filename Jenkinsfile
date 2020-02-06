@@ -15,14 +15,14 @@ pipeline {
                 sh "git rev-parse --short HEAD > commit-id"
             }
         }
-        stage('Build') {
+        stage('Build package and image') {
             steps {
                 sh "mvn -B -DskipTests clean package"
                 script {
                     tag = readFile('commit-id').replace("\n", "").replace("\r", "")
                     imageName = '${COMPANY_NAME}/${APP_NAME}:${tag}'
                     echo '${imageName}'
-                    customImage = docker.build("${imageName}")
+                    def customImage = docker.build("${imageName}")
                 }
             }
         }
@@ -31,7 +31,7 @@ pipeline {
                 script {
                     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
                         sh 'docker login -u "$USERNAME" -p "$PASSWORD"'
-                        custom.push()
+                        customImage.push()
                         customImage.push('latest')
                     }
                 }
@@ -45,9 +45,9 @@ pipeline {
             }
         }
     }
-    //post {
-        //always {
-            //slackNotifier(currentBuild.currentResult, 'Delivery')
-        //}
-    //}
+    post {
+        always {
+            slackNotifier(currentBuild.currentResult, 'Delivery')
+        }
+    }
 }
