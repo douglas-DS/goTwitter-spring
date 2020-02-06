@@ -69,7 +69,7 @@ pipeline {
 
 def notifyBuild(String buildStatus = 'STARTED') {
     // build status of null means successful
-    buildStatus =  buildStatus ?: 'SUCCESSFUL'
+    buildStatus =  buildStatus ?: 'SUCCESS'
 
     // Default values
 //     def colorName = 'RED'
@@ -84,7 +84,7 @@ def notifyBuild(String buildStatus = 'STARTED') {
             color = 'YELLOW';
             colorCode = '#FFFF00';
             break;
-        case 'SUCCESSFUL':
+        case 'SUCCESS':
             color = 'GREEN'
             colorCode = '#00FF00'
             break;
