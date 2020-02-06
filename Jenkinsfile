@@ -1,9 +1,7 @@
 //@Library('jenkins-shared-library') _
 pipeline {
     agent any
-    tools {
-        maven 'maven-3'
-    }
+    tools { maven 'maven-3' }
     environment {
         COMPANY_NAME = 'douglasso'
         APP_NAME = 'gotwitter-spring'
@@ -11,9 +9,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                script {
-		            notifyBuild('STARTED') 
-		        }
+                script { notifyBuild('STARTED') }
                 checkout scm
                 sh "git rev-parse --short HEAD > commit-id"
             }
@@ -48,6 +44,24 @@ pipeline {
                 sh "kubectl apply -f k8s_${APP_NAME}.yaml"
                 sh "kubectl set image deployments/${APP_NAME} ${APP_NAME}=${imageName}"
                 sh "kubectl rollout status deployments/${APP_NAME}"
+            }
+        }
+    }
+    post {
+        success {
+            script {
+                notifyBuild(currentBuild.result)
+            }
+        }
+        failure {
+            script {
+                currentBuild.result = 'FAILURE'
+                notifyBuild(currentBuild.result)
+            }
+        }
+        always {
+            script {
+                notifyBuild(currentBuild.result)
             }
         }
     }
