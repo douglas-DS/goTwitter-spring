@@ -12,7 +12,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 script { 
-                    lib.notifyBuild('STARTED') 
+                    notifyBuild('STARTED') 
                 }
                 checkout scm
                 sh "git rev-parse --short HEAD > commit-id"
@@ -49,15 +49,12 @@ pipeline {
         }
     }
     post {
-        //success {
-            //notifyBuild(currentBuild.result)
-        //}
+        success {
+            notifyBuild(currentBuild.result)
+        }
         failure {
-            steps {
-                script { 
-                    currentBuild.result = 'FAILURE'
-                }
-            }
+            currentBuild.result = 'FAILURE'
+            notifyBuild(currentBuild.result)
         }
         always {
             notifyBuild(currentBuild.result)
