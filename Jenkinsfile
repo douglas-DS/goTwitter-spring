@@ -34,7 +34,7 @@ pipeline {
                 script {
                     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub-ds', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
                         sh 'docker login -u "$USERNAME" -p "$PASSWORD"'
-                        echo ${CUSTOM_IMAGE}
+                        echo "${CUSTOM_IMAGE}"
                         CUSTOM_IMAGE.push()
                         CUSTOM_IMAGE.push('latest')
                     }
