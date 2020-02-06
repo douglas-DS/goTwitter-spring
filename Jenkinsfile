@@ -16,12 +16,14 @@ pipeline {
             }
         }
         stage('Build package and image') {
+            environment {
+                TAG = readFile('commit-id').trim()
+            }
             steps {
                 sh "mvn -B -DskipTests clean package"
                 script {
-                    def tag = readFile('commit-id').replace("\n", "").replace("\r", "")
-                    def imageName = '${COMPANY_NAME}/${APP_NAME}:${tag}'
-                    echo '${imageName}'
+                    //def tag = readFile('commit-id').replace("\n", "").replace("\r", "")
+                    def imageName = '${COMPANY_NAME}/${APP_NAME}:${TAG}'
                     def customImage = docker.build("${imageName}")
                 }
             }
