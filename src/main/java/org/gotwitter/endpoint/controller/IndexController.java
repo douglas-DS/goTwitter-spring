@@ -1,6 +1,7 @@
 package org.gotwitter.endpoint.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.BufferedReader;
@@ -8,11 +9,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 @RestController
+@RequestMapping("/")
 public class IndexController {
     @GetMapping
     public String mainIndex() {
         String cmd = "hostname";
-        Process process = null;
+        Process process;
         String stringProcess = "";
         try {
             process = Runtime.getRuntime().exec(cmd);
