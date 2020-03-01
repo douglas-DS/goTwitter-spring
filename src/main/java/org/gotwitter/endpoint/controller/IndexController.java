@@ -13,18 +13,17 @@ import java.io.InputStreamReader;
 public class IndexController {
     @GetMapping
     public String mainIndex() {
-        String cmd = "hostname";
         Process process;
         String stringProcess = "";
         try {
-            process = Runtime.getRuntime().exec(cmd);
+            process = Runtime.getRuntime().exec("hostname");
             BufferedReader stdInput = new BufferedReader(new InputStreamReader(process.getInputStream()));
             stringProcess = stdInput.readLine();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return "<h3>Greetings from spring !!</h3>" +
-                "<b>Hostname: <b/>" + stringProcess + "<br/>";
+        return "<h3>Greetings from goTwitter service !!</h3>" +
+                "<b>Hostname (container id): <b/>" + stringProcess + "<br/>";
     }
 }
