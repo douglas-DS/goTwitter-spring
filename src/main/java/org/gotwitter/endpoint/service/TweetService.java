@@ -21,7 +21,7 @@ public class TweetService {
     }
 
     public ResponseEntity<List<Tweet>> listAllToIndex() {
-        List<Tweet> allTweets = tweetRepository.findAll(new Sort(Sort.Direction.DESC, "createdAt"));
+        List<Tweet> allTweets = tweetRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
         log.info("Listing all tweets by creation date");
         return ResponseEntity.ok(allTweets);
     }
