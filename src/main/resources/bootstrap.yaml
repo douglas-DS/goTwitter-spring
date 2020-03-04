@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: gotwitter-spring
+  cloud:
+    config:
+      uri: https://microservices-configuration.herokuapp.com/
